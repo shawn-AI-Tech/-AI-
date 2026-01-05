@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国游戏行业AI应用现状与未来趋势研究</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FFFFFF;
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 1.25rem; /* 20px */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        .highlight-gradient-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0), rgba(59, 130, 246, 0.05));
+        }
+        .highlight-gradient-green {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.05));
+        }
+        .highlight-gradient-purple {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0), rgba(139, 92, 246, 0.05));
+        }
+        .highlight-gradient-amber {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0), rgba(245, 158, 11, 0.05));
+        }
+        .highlight-gradient-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0), rgba(239, 68, 68, 0.05));
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- 标题卡片 -->
+            <div class="card md:col-span-4 p-8 flex flex-col justify-center items-center text-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative w-full">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">中国游戏行业AI应用现状与未来趋势研究</h1>
+                    <p class="text-xl text-gray-500 font-light">Research on AI Application Status and Future Trends in China's Game Industry</p>
+                </div>
+            </div>
+
+            <!-- 行业概况卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-between relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">行业发展背景</h2>
+                    <p class="text-gray-600 mb-6">2025年中国游戏市场销售收入达到<span class="font-bold text-green-600">3507.89亿元</span>，用户规模达到<span class="font-bold text-green-600">6.83亿</span>，两项指标均创历史新高。</p>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-arrow-trend-up text-green-500 text-xl"></i>
+                            <span class="text-gray-600">同比增长7.68%</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-users text-green-500 text-xl"></i>
+                            <span class="text-gray-600">同比增长1.35%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI应用率卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-center items-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <div class="relative text-center">
+                    <div class="text-7xl font-bold text-purple-600 mb-2">86.36%</div>
+                    <p class="text-xl text-gray-700 font-semibold mb-1">AI技术应用率</p>
+                    <p class="text-gray-500">游戏研发环节应用率远超海外同行(50%-55%)</p>
+                </div>
+            </div>
+
+            <!-- 应用模式卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-amber"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">AI应用模式分布</h2>
+                    <div class="w-full h-80">
+                        <canvas id="applicationModelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 政策环境卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-between relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">政策环境与监管</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-file-contract text-blue-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">版号发放创新高</h3>
+                                <p class="text-gray-600">2025年发放1771个版号，较2024年增长25%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-shield-halved text-blue-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">AI服务管理办法</h3>
+                                <p class="text-gray-600">建立内容安全审查机制，明确合规指引</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主要厂商布局卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-between relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">主要厂商AI战略</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-rocket text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">腾讯VISVISE</h3>
+                                <p class="text-gray-600">全链路AI游戏创作解决方案，覆盖3D建模、动画制作</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-brain text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">网易DeepSeek</h3>
+                                <p class="text-gray-600">游戏研发效率提升30%，推出AI大模型竞技场</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-robot text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">三七互娱"小七"</h3>
+                                <p class="text-gray-600">自研游戏行业大模型，2D美术资产占比超80%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 生成式内容AI应用卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">生成式内容AI应用现状</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white/50 p-6 rounded-xl border border-purple-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-mountain-sun text-purple-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">游戏场景生成</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">通过PCG技术自动创建大规模、多样化游戏场景，如腾讯云游长城项目"种"了20万棵树，网易《蛋仔派对》实现移动端实时3D生成。</p>
+                        </div>
+                        <div class="bg-white/50 p-6 rounded-xl border border-purple-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-book-open text-purple-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">剧情角色生成</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">AI自动生成游戏剧情、角色对话和背景故事，如百度文心大模型增强叙事张力，《寂静追凶录》实现全流程AI驱动创作。</p>
+                        </div>
+                        <div class="bg-white/50 p-6 rounded-xl border border-purple-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-code text-purple-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">技术实现路径</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">基于Transformer架构的大语言模型和多模态模型，如腾讯VISVISE平台单季度产出超50万张2D美术素材，提效超80%。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 效率提升数据卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">AI应用效率提升数据</h2>
+                    <div class="w-full h-80">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NPC行为智能卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">NPC行为智能AI应用现状</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">智能互动技术应用</h3>
+                            <p class="text-gray-600 mb-4">现代游戏中的NPC已从"工具人"转变为具有自主意识和情感表达能力的"智能生命体"。</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-comment-dots text-blue-500 text-lg mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-700">网易《逆水寒》"沈秋索"</h4>
+                                        <p class="text-gray-500 text-sm">基于DeepSeek大模型，可与玩家唠嗑、分享经历，从诗词歌赋聊到人生哲学。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-user-astronaut text-blue-500 text-lg mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-700">腾讯《和平精英》"吉莉"</h4>
+                                        <p class="text-gray-500 text-sm">数字代言人接入DeepSeek，常驻游戏大厅与玩家流畅互动交流。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">自主决策与行为控制</h3>
+                            <p class="text-gray-600 mb-4">通过强化学习、行为树等技术，现代NPC具备复杂决策能力和自适应行为。</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-users-gear text-blue-500 text-lg mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-700">网易伏羲《永劫无间》AI队友</h4>
+                                        <p class="text-gray-500 text-sm">通过语音指令执行操作，获得即时情绪反馈，提升游戏陪伴感。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-robot text-blue-500 text-lg mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-700">NVIDIA ACE技术</h4>
+                                        <p class="text-gray-500 text-sm">在游戏inZOI中，SmartZoi使NPC决策响应速度提升40%，行为复杂度提高3倍。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 性能表现卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-center items-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-amber"></div>
+                <div class="relative text-center">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">NPC性能表现</h3>
+                    <div class="grid grid-cols-3 gap-4 w-full">
+                        <div>
+                            <div class="text-3xl font-bold text-amber-600">420ms</div>
+                            <p class="text-sm text-gray-500">日常闲聊延迟</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-amber-600">4.8/5</div>
+                            <p class="text-sm text-gray-500">回应自然度</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-amber-600">67%</div>
+                            <p class="text-sm text-gray-500">玩家信任度提升</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 技术架构卡片 -->
+            <div class="card md:col-span-2 p-8 flex flex-col justify-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <div class="relative">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">NPC技术架构</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <span class="text-gray-700">大语言模型(LLM)实现智能对话</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <span class="text-gray-700">行为树(Behavior Tree)管理决策逻辑</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <span class="text-gray-700">A*算法和导航网格实现路径规划</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <span class="text-gray-700">情感计算技术识别和表达情感</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未来趋势卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">未来发展趋势展望</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">技术发展趋势</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white/50 p-4 rounded-lg border border-purple-100">
+                                    <h4 class="font-medium text-gray-700 mb-2">大语言模型与游戏引擎深度融合</h4>
+                                    <p class="text-gray-600 text-sm">渗透率将从2023年的12%提升至2030年的89%，覆盖90%的游戏制作环节。</p>
+                                </div>
+                                <div class="bg-white/50 p-4 rounded-lg border border-purple-100">
+                                    <h4 class="font-medium text-gray-700 mb-2">神经渲染技术突破</h4>
+                                    <p class="text-gray-600 text-sm">3D资产制作效率提升20倍，带动ARPU值增长18%，实现照片级真实感。</p>
+                                </div>
+                                <div class="bg-white/50 p-4 rounded-lg border border-purple-100">
+                                    <h4 class="font-medium text-gray-700 mb-2">AI原生游戏出现</h4>
+                                    <p class="text-gray-600 text-sm">到2027年，中国AI原生游戏市场规模将达到337亿元，实现3年超20倍增长。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">市场规模与产业影响预测</h3>
+                            <div class="w-full h-64 mb-4">
+                                <canvas id="marketGrowthChart"></canvas>
+                            </div>
+                            <div class="bg-white/50 p-4 rounded-lg border border-purple-100">
+                                <p class="text-gray-600 text-sm">游戏产业对AI产业的拉动规模将从2023年的315.76亿上升至2030年的1038.1亿元，年均增长率约达16%。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 风险挑战卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">风险挑战与应对策略</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <i class="fa-solid fa-triangle-exclamation text-red-500 text-xl mt-1"></i>
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">技术风险</h3>
+                                    <p class="text-gray-600 text-sm">AI技术的不确定性可能导致游戏异常行为或内容错误。</p>
+                                    <p class="text-gray-500 text-xs mt-1">应对：建立完善的AI系统测试和内容审核机制。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fa-solid fa-copyright text-red-500 text-xl mt-1"></i>
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">版权与知识产权风险</h3>
+                                    <p class="text-gray-600 text-sm">AI生成内容的版权归属复杂，易引发侵权纠纷。</p>
+                                    <p class="text-gray-500 text-xs mt-1">应对：建立版权审查机制，明确AI生成内容标识。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <i class="fa-solid fa-user-shield text-red-500 text-xl mt-1"></i>
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">伦理与社会影响风险</h3>
+                                    <p class="text-gray-600 text-sm">AI技术可能被用于制作成瘾性更强的游戏内容。</p>
+                                    <p class="text-gray-500 text-xs mt-1">应对：建立AI游戏伦理审查机制和防沉迷系统。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fa-solid fa-user-graduate text-red-500 text-xl mt-1"></i>
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">人才短缺风险</h3>
+                                    <p class="text-gray-600 text-sm">AI与游戏设计复合人才短缺情况最为突出，占比达72.7%。</p>
+                                    <p class="text-gray-500 text-xs mt-1">应对：加强高校相关专业建设，建立企业内部培训体系。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 发展建议卡片 -->
+            <div class="card md:col-span-4 p-8 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">行业洞察与发展建议</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white/50 p-6 rounded-xl border border-green-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-lightbulb text-green-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">技术投入策略</h3>
+                            </div>
+                            <ul class="space-y-2 text-gray-600 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>分阶段实施AI技术战略</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>聚焦高价值应用场景</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>建立AI技术评估体系</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>加强技术合作与生态建设</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/50 p-6 rounded-xl border border-green-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-users text-green-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">人才培养体系</h3>
+                            </div>
+                            <ul class="space-y-2 text-gray-600 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>构建AI+游戏复合型人才培养模式</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>建立企业内部AI技能提升机制</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>引进与培养并重的人才策略</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>建立人才激励与保留机制</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-white/50 p-6 rounded-xl border border-green-100">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fa-solid fa-shield-virus text-green-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-gray-800">风险管控合规</h3>
+                            </div>
+                            <ul class="space-y-2 text-gray-600 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>建立完善的AI内容审核机制</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>加强版权风险防控</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>建立AI伦理规范</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                    <span>完善数据安全管理</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 应用模式分布图表
+    const applicationModelCtx = document.getElementById('applicationModelChart').getContext('2d');
+    new Chart(applicationModelCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['辅助探索使用', '人力主导工作模式', '人机协同均衡模式'],
+            datasets: [{
+                data: [73.7, 21.1, 5.3],
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(16, 185, 129, 0.7)',
+                    'rgba(139, 92, 246, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(139, 92, 246, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            family: 'Inter',
+                            size: 14
+                        },
+                        padding: 20
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'AI应用模式分布',
+                    font: {
+                        family: 'Inter',
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: {
+                        bottom: 20
+                    }
+                }
+            }
+        }
+    });
+
+    // 效率提升数据图表
+    const efficiencyCtx = document.getElementById('efficiencyChart').getContext('2d');
+    new Chart(efficiencyCtx, {
+        type: 'bar',
+        data: {
+            labels: ['2D美术资产', '3D模型制作', '动画制作', '代码生成', '测试效率', '广告素材'],
+            datasets: [{
+                label: '效率提升百分比 (%)',
+                data: [80, 50, 70, 40, 60, 70],
+                backgroundColor: [
+                    'rgba(16, 185, 129, 0.7)',
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(139, 92, 246, 0.7)',
+                    'rgba(245, 158, 11, 0.7)',
+                    'rgba(239, 68, 68, 0.7)',
+                    'rgba(16, 185, 129, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(139, 92, 246, 1)',
+                    'rgba(245, 158, 11, 1)',
+                    'rgba(239, 68, 68, 1)',
+                    'rgba(16, 185, 129, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'AI在各环节的效率提升',
+                    font: {
+                        family: 'Inter',
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: {
+                        bottom: 20
+                    }
+                }
+            }
+        }
+    });
+
+    // 市场增长预测图表
+    const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
+    new Chart(marketGrowthCtx, {
+        type: 'line',
+        data: {
+            labels: ['2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
+            datasets: [
+                {
+                    label: 'AI游戏市场规模 (亿元)',
+                    data: [15, 30, 65, 120, 200, 450, 750, 1038],
+                    borderColor: 'rgba(139, 92, 246, 1)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'AI原生游戏市场规模 (亿元)',
+                    data: [0, 5, 15, 45, 120, 200, 280, 337],
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '亿';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            family: 'Inter',
+                            size: 12
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'AI游戏市场规模增长预测',
+                    font: {
+                        family: 'Inter',
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    padding: {
+                        bottom: 10
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>
